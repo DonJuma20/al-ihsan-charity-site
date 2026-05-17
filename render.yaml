@@ -11,66 +11,27 @@ services:
         value: 20
       - key: APP_STORAGE_DIR
         value: /tmp/al-ihsan
-      - key: PUBLIC_SITE_URL
-        sync: false
-      - key: ADMIN_EMAIL
-        sync: false
       - key: EMAIL_PROVIDER
         value: local-outbox
-      - key: EMAIL_FROM
-        sync: false
-      - key: RESEND_API_KEY
-        sync: false
-      - key: BREVO_API_KEY
-        sync: false
       - key: MTN_MOMO_ENABLED
         value: "false"
       - key: MTN_MOMO_BASE_URL
         value: https://sandbox.momodeveloper.mtn.com
       - key: MTN_MOMO_TARGET_ENVIRONMENT
         value: sandbox
-      - key: MTN_MOMO_COLLECTION_SUBSCRIPTION_KEY
-        sync: false
-      - key: MTN_MOMO_API_USER
-        sync: false
-      - key: MTN_MOMO_API_KEY
-        sync: false
       - key: MTN_MOMO_CURRENCY
         value: EUR
-      - key: MTN_MOMO_MERCHANT_PHONE
-        sync: false
       - key: SETTLEMENT_ACCOUNT_NAME
         value: AL-IHSAN CHARITY FOUNDATION
       - key: SETTLEMENT_BANK_NAME
         value: Absa Bank Uganda
-      - key: SETTLEMENT_BANK_BRANCH
-        sync: false
-      - key: SETTLEMENT_ACCOUNT_NUMBER
-        sync: false
-      - key: SETTLEMENT_SWIFT_BIC
-        sync: false
       - key: SETTLEMENT_CURRENCY
         value: UGX
       - key: SETTLEMENT_REFERENCE_PREFIX
         value: AICF-DONATION
-      - key: SETTLEMENT_INSTRUCTIONS
-        sync: false
       - key: AIRTEL_ENABLED
         value: "false"
       - key: AIRTEL_PROVIDER
         value: Manual Airtel Money
-      - key: AIRTEL_MERCHANT_PHONE
-        sync: false
-      - key: AIRTEL_PAYMENT_LINK
-        sync: false
-      - key: AIRTEL_INSTRUCTIONS
-        sync: false
       - key: PAYMENT_PROVIDER
-        sync: false
-      - key: PAYMENT_CHECKOUT_URL
-        sync: false
-      - key: PAYMENT_PUBLIC_KEY
-        sync: false
-      - key: PAYMENT_SECRET_KEY
-        sync: false
-
+        value: not configured
