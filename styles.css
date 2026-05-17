@@ -28,6 +28,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -1136,8 +1137,70 @@ h3 {
   color: #ffccd2;
 }
 
+.coordinator-section,
 .gallery {
   padding: 88px 0;
+}
+
+.coordinator-card {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.76fr) minmax(0, 1.24fr);
+  gap: 30px;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid rgba(122, 7, 18, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow);
+}
+
+.coordinator-media {
+  position: relative;
+  min-height: 420px;
+}
+
+.coordinator-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coordinator-seal {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: #fff;
+  padding: 8px;
+  box-shadow: 0 18px 40px rgba(58, 3, 12, 0.2);
+}
+
+.coordinator-copy {
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  padding: 34px;
+}
+
+.coordinator-copy h2,
+.coordinator-copy p {
+  margin: 0;
+}
+
+.coordinator-copy blockquote {
+  margin: 4px 0 0;
+  border-left: 4px solid var(--red-600);
+  color: var(--red-900);
+  padding: 12px 0 12px 18px;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.coordinator-copy strong {
+  color: var(--red-700);
+  text-transform: uppercase;
 }
 
 .gallery-grid {
@@ -1158,6 +1221,49 @@ h3 {
 .gallery-grid img:first-child,
 .gallery-grid img:nth-child(4) {
   grid-row: span 2;
+}
+
+.field-stories {
+  padding: 88px 0;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.story-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(70, 12, 18, 0.08);
+}
+
+.story-card video {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--ink);
+}
+
+.story-card div {
+  display: grid;
+  gap: 6px;
+  padding: 18px;
+}
+
+.story-card span {
+  color: var(--red-700);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.story-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
 }
 
 .live-media {
@@ -1556,10 +1662,12 @@ textarea:focus {
   .trust-grid,
   .report-grid,
   .field-map-layout,
+  .coordinator-card,
   .qurban-layout,
   .qurban-cards,
   .goal-layout,
   .faith-grid,
+  .story-grid,
   .managed-grid,
   .donate-layout,
   .contact-card {
@@ -1645,7 +1753,11 @@ textarea:focus {
   }
 
   h1 {
-    font-size: 2.65rem;
+    font-size: 2.36rem;
+  }
+
+  .hero-content h1 {
+    max-width: 10.4ch;
   }
 
   h2 {
@@ -1670,11 +1782,13 @@ textarea:focus {
   .trust-grid,
   .report-grid,
   .field-map-layout,
+  .coordinator-card,
   .qurban-layout,
   .qurban-cards,
   .goal-layout,
   .goal-meter,
   .faith-grid,
+  .story-grid,
   .managed-grid,
   .donate-layout,
   .contact-card,
@@ -1722,12 +1836,14 @@ textarea:focus {
   }
 
   .about-section,
+  .coordinator-section,
   .projects,
   .qurban-section,
   .goal-section,
   .faith-section,
   .impact,
   .gallery,
+  .field-stories,
   .live-media,
   .donate-section,
   .contact {
@@ -1746,6 +1862,14 @@ textarea:focus {
   .gallery-grid img:first-child,
   .gallery-grid img:nth-child(4) {
     grid-row: span 1;
+  }
+
+  .coordinator-media {
+    min-height: 360px;
+  }
+
+  .coordinator-copy {
+    padding: 24px 20px;
   }
 
   .amount-row,

@@ -1,0 +1,91 @@
+[
+  {
+    "provider": "mtn-momo",
+    "referenceId": "b2ba471c-fbb5-4c12-8784-7059af7fedc4",
+    "externalId": "AICF-1778957931301",
+    "amount": 30,
+    "currency": "EUR",
+    "cause": "General sadaqah and urgent needs",
+    "donorName": "Donor",
+    "donorPhone": "256780937446",
+    "donorEmail": "",
+    "donorContact": "",
+    "frequency": "one-time",
+    "qurbanAnimal": "goat",
+    "qurbanQuantity": 1,
+    "status": "PENDING",
+    "createdAt": "2026-05-16T18:58:56.821Z"
+  },
+  {
+    "provider": "mtn-momo",
+    "referenceId": "4cf26afd-61b9-4bd7-b83a-7238237722eb",
+    "externalId": "AICF-1778817087801",
+    "amount": 30,
+    "currency": "EUR",
+    "cause": "General sadaqah and urgent needs",
+    "donorName": "Donor",
+    "donorPhone": "256780937446",
+    "status": "PENDING",
+    "createdAt": "2026-05-15T03:51:30.122Z"
+  },
+  {
+    "provider": "mtn-momo",
+    "referenceId": "064824a9-ff32-4154-9028-8aa7fe15b3fa",
+    "externalId": "AICF-1778499932387",
+    "amount": 2,
+    "currency": "EUR",
+    "cause": "Quran distribution",
+    "donorName": "Donor",
+    "donorPhone": "256780937446",
+    "status": "PENDING",
+    "createdAt": "2026-05-11T11:45:35.209Z"
+  },
+  {
+    "provider": "mtn-momo",
+    "referenceId": "ee01b9a1-ce07-434e-a540-a0141da305fa",
+    "externalId": "AICF-1778498618968",
+    "amount": 30,
+    "currency": "EUR",
+    "cause": "General sadaqah and urgent needs",
+    "donorName": "Donor",
+    "donorPhone": "256780937446",
+    "status": "PENDING",
+    "createdAt": "2026-05-11T11:23:41.098Z"
+  },
+  {
+    "provider": "mtn-momo",
+    "referenceId": "2f683784-d0c1-4cd9-ae6f-9d9fe88b3dad",
+    "externalId": "AICF-1778485940498",
+    "amount": 1,
+    "currency": "EUR",
+    "cause": "General sadaqah and urgent needs",
+    "donorName": "Donor",
+    "donorPhone": "256780937446",
+    "status": "PENDING",
+    "createdAt": "2026-05-11T07:52:22.413Z"
+  },
+  {
+    "provider": "mtn-momo",
+    "referenceId": "fd2cefd5-d1f0-4ae2-a689-b663fe7d7810",
+    "externalId": "AICF-1778485872454",
+    "amount": 30,
+    "currency": "EUR",
+    "cause": "General sadaqah and urgent needs",
+    "donorName": "Donor",
+    "donorPhone": "256780937446",
+    "status": "PENDING",
+    "createdAt": "2026-05-11T07:51:15.368Z"
+  },
+  {
+    "provider": "mtn-momo",
+    "referenceId": "156df865-a987-4f44-8f13-9d6a9748c4f8",
+    "externalId": "AICF-1778485724099",
+    "amount": 1,
+    "currency": "EUR",
+    "cause": "Sandbox test donation",
+    "donorName": "Sandbox Donor",
+    "donorPhone": "256780937446",
+    "status": "PENDING",
+    "createdAt": "2026-05-11T07:48:46.127Z"
+  }
+]

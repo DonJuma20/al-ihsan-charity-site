@@ -1,0 +1,24 @@
+[
+  {
+    "id": "quran-copies",
+    "title": "Quran distribution",
+    "cause": "Quran distribution",
+    "icon": "book-open",
+    "unitName": "Quran",
+    "unitCost": 10,
+    "quantity": 100,
+    "target": 1000,
+    "raised": 30,
+    "currency": "USD",
+    "status": "active",
+    "description": "Give Quran copies to children, elders, new Muslims, and students of knowledge.",
+    "location": "Uganda",
+    "beneficiaries": "Students of knowledge",
+    "milestone": "Distribution active",
+    "nextNeed": "More Quran copies",
+    "priceNote": "$10 is the current Quran copy estimate.",
+    "priceUpdatedAt": "2026-05-11T11:13:43.293Z",
+    "updatedAt": "2026-05-11T12:38:20.814Z",
+    "createdAt": "2026-05-11T11:13:43.293Z"
+  }
+]

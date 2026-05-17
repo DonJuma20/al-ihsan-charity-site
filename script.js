@@ -240,6 +240,15 @@ const modalDonation = wireDonationForm({
 function paymentUrl(source = {}) {
   const cause = source.cause || "General sadaqah and urgent needs";
   const amount = source.amount || "30";
+  if (window.AL_IHSAN_STATIC_ONLY) {
+    const message = [
+      "Assalamu alaikum Al-Ihsan Charity Foundation.",
+      "I would like to donate.",
+      `Project: ${cause}`,
+      `Amount: $${amount}`,
+    ].join("\n");
+    return `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`;
+  }
   const params = new URLSearchParams({ cause, amount });
   return `/pay.html?${params.toString()}`;
 }

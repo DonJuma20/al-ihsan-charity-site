@@ -75,6 +75,23 @@
     window.addEventListener("resize", update);
   }
 
+  function installLoader() {
+    const loader = document.querySelector("[data-site-loader]");
+    if (!loader) return;
+
+    const hideLoader = () => {
+      loader.classList.add("is-hidden");
+      window.setTimeout(() => loader.remove(), 720);
+    };
+
+    if (document.readyState === "complete") {
+      window.setTimeout(hideLoader, 260);
+      return;
+    }
+
+    window.addEventListener("load", () => window.setTimeout(hideLoader, 260), { once: true });
+  }
+
   function installToasts() {
     const stack = document.createElement("div");
     stack.className = "toast-stack";
@@ -103,6 +120,7 @@
   });
 
   addCardIcons();
+  installLoader();
   installToasts();
   installScrollProgress();
   window.lucide?.createIcons();

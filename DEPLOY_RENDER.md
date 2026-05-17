@@ -9,24 +9,30 @@ Use this path for the **full** Al-Ihsan site with:
 - campaign/report persistence
 - payment integrations
 
-## Why Render
+## Free first launch
 
-This app stores runtime state in JSON files and uploaded media on disk. A Render web service can run the Node app, and a Render persistent disk keeps that storage alive across restarts and redeploys.
+The default `render.yaml` is now set up for a **free** first deployment:
+- `plan: free`
+- no persistent disk
+- temporary runtime storage in `/tmp/al-ihsan`
+
+This lets the public site, donor flow, and master page come online without adding a card first. On the free setup, uploads and locally stored admin data can disappear after restarts or redeploys, so treat it as a launch/demo mode rather than the final permanent setup.
+
+## Why upgrade later
+
+This app stores runtime state in JSON files and uploaded media on disk. A paid Render web service with a persistent disk keeps that storage alive across restarts and redeploys.
 
 ## What is already prepared
 
 - `render.yaml`
 - configurable storage paths in `server.js`
-- `APP_STORAGE_DIR=/var/data`
-- persistent disk mount at `/var/data`
+- `APP_STORAGE_DIR=/tmp/al-ihsan` for the free first launch
 
 ## Deployment Steps
 
 1. Put the project in a Git repository.
 2. Create a new Render Blueprint from that repository.
-3. Render will read `render.yaml` and create:
-   - one Node web service
-   - one persistent disk mounted at `/var/data`
+3. Render will read `render.yaml` and create one free Node web service.
 4. Fill the secret environment variables when Render asks for them:
    - `PUBLIC_SITE_URL`
    - `ADMIN_EMAIL`
@@ -44,4 +50,5 @@ This app stores runtime state in JSON files and uploaded media on disk. A Render
 - Do **not** upload your local `.env` file.
 - Do **not** upload `data/auth.json` from your computer.
 - Use the live domain URL in `PUBLIC_SITE_URL`.
-- Keep the persistent disk attached. Without persistent storage, uploads and admin data can disappear on redeploy.
+- On the free setup, uploads and admin data can disappear after restarts or redeploys because there is no persistent disk.
+- When you are ready for a durable production setup, change `plan: free` back to a paid plan, set `APP_STORAGE_DIR=/var/data`, and restore a persistent disk block in `render.yaml`.

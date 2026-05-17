@@ -1522,6 +1522,8 @@ async function serveStatic(req, res, url) {
   let pathname = decodeURIComponent(url.pathname);
   if (pathname === "/") pathname = "/index.html";
   if (pathname === "/master") pathname = "/master.html";
+  if (pathname === "/pay" || pathname === "/donate") pathname = "/pay.html";
+  if (pathname === "/portal") pathname = "/portal.html";
   const staticRoot = pathname.startsWith("/uploads/") ? UPLOAD_DIR : ROOT;
   const relativePath = pathname.startsWith("/uploads/") ? pathname.slice("/uploads/".length) : pathname;
   const file = path.normalize(path.join(staticRoot, relativePath));

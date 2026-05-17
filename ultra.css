@@ -149,7 +149,7 @@ main {
   overflow: clip;
   background:
     linear-gradient(115deg, rgba(58, 3, 12, 0.98), rgba(118, 4, 23, 0.96) 42%, rgba(215, 8, 47, 0.88)),
-    url("assets/images/optimized/well-community.jpg") center / cover !important;
+    url("assets/images/optimized/field-water-community.jpg") center / cover !important;
 }
 
 .hero::before {
@@ -651,6 +651,16 @@ main {
   border-radius: 18px;
 }
 
+.coordinator-card,
+.story-card {
+  border-radius: 18px;
+}
+
+.coordinator-photo,
+.story-card video {
+  filter: saturate(1.08) contrast(1.05);
+}
+
 .contact-card {
   background:
     linear-gradient(120deg, var(--brand-red-ink), var(--brand-red-deep)) !important;
@@ -1003,8 +1013,10 @@ main {
   }
 
   .gift-dock {
-    right: 12px;
+    left: 12px;
+    right: auto;
     bottom: 12px;
+    justify-items: start;
   }
 
   .gift-dock-toggle {

@@ -738,12 +738,16 @@ textarea:focus {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  display: grid;
+  display: none;
   place-items: center;
   background:
-    radial-gradient(circle at 50% 40%, rgba(221, 18, 49, 0.12), transparent 28%),
-    rgba(255, 255, 255, 0.96);
-  transition: opacity 320ms ease, visibility 320ms ease;
+    radial-gradient(circle at 50% 40%, rgba(221, 18, 49, 0.16), transparent 26%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99), rgba(255, 241, 244, 0.98));
+  transition: opacity 520ms ease, visibility 520ms ease;
+}
+
+.js .site-loader {
+  display: grid;
 }
 
 .site-loader.is-hidden {
@@ -752,9 +756,39 @@ textarea:focus {
 }
 
 .loader-mark {
+  position: relative;
   display: grid;
   justify-items: center;
-  gap: 14px;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.loader-halo {
+  position: absolute;
+  top: -18px;
+  width: 124px;
+  height: 124px;
+  border: 1px solid rgba(221, 18, 49, 0.2);
+  border-radius: 50%;
+}
+
+.loader-halo::before,
+.loader-halo::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+}
+
+.loader-halo::before {
+  border-top: 3px solid var(--red-600);
+  animation: loader-spin 1.15s linear infinite;
+}
+
+.loader-halo::after {
+  inset: 10px;
+  border-right: 2px solid rgba(6, 63, 49, 0.58);
+  animation: loader-spin 1.6s linear reverse infinite;
 }
 
 .loader-mark img {
@@ -762,6 +796,13 @@ textarea:focus {
   height: 88px;
   border-radius: 24px;
   animation: loader-pulse 1.2s ease-in-out infinite;
+}
+
+.loader-mark strong {
+  color: var(--red-900);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  text-transform: uppercase;
 }
 
 .loader-mark span {
@@ -826,6 +867,12 @@ textarea:focus {
   50% {
     transform: scale(1.05);
     box-shadow: 0 18px 44px rgba(221, 18, 49, 0.22);
+  }
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 

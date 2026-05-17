@@ -1,0 +1,84 @@
+[
+  {
+    "id": "fbce79e4-2e51-4fa6-ae54-2239952002ab",
+    "to": "jumamuyita0@gmail.com",
+    "subject": "Your Al-Ihsan donor portal code",
+    "text": "Use this code to open your Al-Ihsan donor portal.\n\nYour code is 451302. It expires in 10 minutes.",
+    "html": "<p>Use this code to open your Al-Ihsan donor portal.</p><p style=\"font-size:24px;font-weight:800;letter-spacing:4px\">451302</p><p>This code expires in 10 minutes.</p>",
+    "purpose": "donor-portal",
+    "createdAt": "2026-05-16T19:00:55.999Z",
+    "code": "451302",
+    "mode": "local-outbox",
+    "delivered": false
+  },
+  {
+    "id": "4fd2d845-030e-4c8b-8df3-673062ed10cf",
+    "to": "jumamuyita0@gmail.com",
+    "subject": "Your Al-Ihsan donor portal code",
+    "text": "Use this code to open your Al-Ihsan donor portal.\n\nYour code is 318991. It expires in 10 minutes.",
+    "html": "<p>Use this code to open your Al-Ihsan donor portal.</p><p style=\"font-size:24px;font-weight:800;letter-spacing:4px\">318991</p><p>This code expires in 10 minutes.</p>",
+    "purpose": "donor-portal",
+    "createdAt": "2026-05-15T04:24:24.829Z",
+    "code": "318991",
+    "mode": "local-outbox",
+    "delivered": false
+  },
+  {
+    "id": "31efcb26-ebc1-43ae-8327-0c73d3d13898",
+    "to": "donor.qa@example.com",
+    "subject": "Your Al-Ihsan donor portal code",
+    "text": "Use this code to open your Al-Ihsan donor portal.\n\nYour code is 436382. It expires in 10 minutes.",
+    "html": "<p>Use this code to open your Al-Ihsan donor portal.</p><p style=\"font-size:24px;font-weight:800;letter-spacing:4px\">436382</p><p>This code expires in 10 minutes.</p>",
+    "purpose": "donor-portal",
+    "createdAt": "2026-05-15T04:23:09.099Z",
+    "code": "436382",
+    "mode": "local-outbox",
+    "delivered": false
+  },
+  {
+    "id": "6f67c5c8-e7e5-43c4-94ed-e444a06305c8",
+    "to": "donor.qa@example.com",
+    "subject": "Your Al-Ihsan donor portal code",
+    "text": "Use this code to open your Al-Ihsan donor portal.\n\nYour code is 257917. It expires in 10 minutes.",
+    "html": "<p>Use this code to open your Al-Ihsan donor portal.</p><p style=\"font-size:24px;font-weight:800;letter-spacing:4px\">257917</p><p>This code expires in 10 minutes.</p>",
+    "purpose": "donor-portal",
+    "createdAt": "2026-05-15T04:22:25.128Z",
+    "code": "257917",
+    "mode": "local-outbox",
+    "delivered": false
+  },
+  {
+    "id": "aa0b301b-08a3-4621-b6ee-679d621f9472",
+    "to": "jumamuyita0@gmail.com",
+    "subject": "Al-Ihsan field update",
+    "text": "A new mercy reached the field\n\nAssalamu alaikum. Here is the latest field update from Al-Ihsan Charity Foundation...",
+    "html": "\n      <div style=\"font-family:Arial,sans-serif;line-height:1.6;color:#171a20\">\n        <h1 style=\"color:#e11232\">A new mercy reached the field</h1>\n        <p>Assalamu alaikum. Here is the latest field update from Al-Ihsan Charity Foundation...</p>\n        <p style=\"color:#07553d;font-weight:700\">Jazakum Allahu khairan for supporting Al-Ihsan Charity Foundation.</p>\n      </div>",
+    "purpose": "field-update",
+    "createdAt": "2026-05-11T11:27:01.048Z",
+    "mode": "local-outbox",
+    "delivered": false
+  },
+  {
+    "id": "52cd5a7c-f3b9-447b-93f6-f312eda63d5e",
+    "to": "jumamuyita0@gmail.com",
+    "subject": "You are subscribed to Al-Ihsan updates",
+    "text": "Jazakum Allahu khairan. You will receive Al-Ihsan Charity Foundation project updates and campaign reports.",
+    "html": "<p>Jazakum Allahu khairan.</p><p>You will receive Al-Ihsan Charity Foundation project updates and campaign reports.</p>",
+    "purpose": "subscriber-welcome",
+    "createdAt": "2026-05-11T11:26:02.817Z",
+    "mode": "local-outbox",
+    "delivered": false
+  },
+  {
+    "id": "a19ba40d-45fa-408b-81b9-095af846beab",
+    "to": "jumamuyita0@gmail.com",
+    "subject": "Confirm Al-Ihsan field updates",
+    "text": "Assalamu alaikum. Confirm your subscription to Al-Ihsan Charity Foundation field updates.\n\nYour code is 426795. It expires in 10 minutes.",
+    "html": "<p>Assalamu alaikum.</p><p>Confirm your subscription to Al-Ihsan Charity Foundation field updates.</p><p style=\"font-size:24px;font-weight:800;letter-spacing:4px\">426795</p><p>This code expires in 10 minutes.</p>",
+    "purpose": "subscriber",
+    "createdAt": "2026-05-11T11:25:50.419Z",
+    "code": "426795",
+    "mode": "local-outbox",
+    "delivered": false
+  }
+]
