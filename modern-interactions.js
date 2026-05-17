@@ -79,17 +79,25 @@
     const loader = document.querySelector("[data-site-loader]");
     if (!loader) return;
 
+    let loaderHidden = false;
     const hideLoader = () => {
+      if (loaderHidden) return;
+      loaderHidden = true;
       loader.classList.add("is-hidden");
       window.setTimeout(() => loader.remove(), 720);
     };
 
-    if (document.readyState === "complete") {
-      window.setTimeout(hideLoader, 260);
-      return;
+    const scheduleHide = () => window.setTimeout(hideLoader, 260);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", scheduleHide, { once: true });
+    } else {
+      scheduleHide();
     }
 
-    window.addEventListener("load", () => window.setTimeout(hideLoader, 260), { once: true });
+    window.addEventListener("load", scheduleHide, { once: true });
+    window.addEventListener("pageshow", scheduleHide, { once: true });
+    window.setTimeout(hideLoader, 2200);
   }
 
   function installToasts() {

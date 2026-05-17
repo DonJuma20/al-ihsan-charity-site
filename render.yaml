@@ -35,3 +35,7 @@ services:
         value: Manual Airtel Money
       - key: PAYMENT_PROVIDER
         value: not configured
+      - key: IPINFO_TOKEN
+        sync: false
+      - key: ANALYTICS_SALT
+        sync: false

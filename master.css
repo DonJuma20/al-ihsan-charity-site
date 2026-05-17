@@ -302,6 +302,26 @@ textarea:focus {
   font-weight: 800;
 }
 
+.story-controls {
+  display: none;
+  gap: 16px;
+}
+
+.story-controls.is-active {
+  display: grid;
+}
+
+.check-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.check-line input {
+  width: 18px;
+  height: 18px;
+}
+
 .field-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -387,6 +407,17 @@ textarea:focus {
 .media-card p {
   margin: 0;
   font-size: 0.9rem;
+}
+
+.media-chip {
+  justify-self: start;
+  border-radius: 999px;
+  background: rgba(215, 25, 47, 0.1);
+  color: var(--red-deep);
+  padding: 6px 10px;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .media-card button {

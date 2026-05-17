@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Analytics | Al-Ihsan Charity Foundation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/al-ihsan-mark.png">
+    <script>document.documentElement.classList.add("js");</script>
+    <link rel="stylesheet" href="master.css">
+    <link rel="stylesheet" href="analytics.css">
+    <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="ultra.css">
+  </head>
+  <body>
+    <div class="site-loader" data-site-loader aria-hidden="true">
+      <div class="loader-mark">
+        <span class="loader-halo"></span>
+        <img src="assets/images/al-ihsan-logo.png" alt="">
+        <strong>Al-Ihsan</strong>
+        <span>Preparing mercy in motion</span>
+      </div>
+    </div>
+
+    <main class="analytics-shell">
+      <section class="analytics-hero">
+        <a class="brand" href="/master.html" aria-label="Back to master studio">
+          <img src="assets/images/al-ihsan-mark.png" alt="">
+          <span>
+            <strong>Al-Ihsan</strong>
+            <small>Private analytics</small>
+          </span>
+        </a>
+        <div>
+          <p class="eyebrow">Donor intelligence</p>
+          <h1>See what people notice, trust, and click.</h1>
+          <p>Private analytics for page visits, button clicks, field-story plays, and known visitor details when someone has chosen to share them.</p>
+        </div>
+      </section>
+
+      <section class="analytics-locked" data-analytics-locked hidden>
+        <p class="eyebrow">Master login required</p>
+        <h2>Unlock the master page first.</h2>
+        <p>This analytics page is private. Open the master studio, log in, then return here.</p>
+        <a class="btn btn-primary" href="/master.html">Open master page</a>
+      </section>
+
+      <section class="analytics-dashboard" data-analytics-dashboard hidden>
+        <div class="analytics-actions">
+          <div>
+            <p class="eyebrow">Live dashboard</p>
+            <h2>Visitor activity</h2>
+          </div>
+          <div>
+            <button class="btn btn-secondary" type="button" data-refresh-analytics>Refresh</button>
+            <a class="btn btn-secondary" href="/master.html">Back to master page</a>
+          </div>
+        </div>
+
+        <section class="analytics-metrics" aria-label="Analytics overview">
+          <article><span>Page views</span><strong data-total-pageviews>0</strong></article>
+          <article><span>Clicks</span><strong data-total-clicks>0</strong></article>
+          <article><span>Video plays</span><strong data-total-videos>0</strong></article>
+          <article><span>Sessions</span><strong data-total-sessions>0</strong></article>
+          <article><span>Known visitors</span><strong data-total-known>0</strong></article>
+        </section>
+
+        <p class="analytics-note" data-geo-note></p>
+
+        <section class="analytics-grid">
+          <article class="analytics-card">
+            <div>
+              <p class="eyebrow">Top pages</p>
+              <h3>Where attention lands</h3>
+            </div>
+            <div class="rank-list" data-top-pages></div>
+          </article>
+
+          <article class="analytics-card">
+            <div>
+              <p class="eyebrow">Top clicks</p>
+              <h3>What people choose</h3>
+            </div>
+            <div class="rank-list" data-top-clicks></div>
+          </article>
+        </section>
+
+        <section class="analytics-card">
+          <div>
+            <p class="eyebrow">Visitors</p>
+            <h3>Recent sessions</h3>
+          </div>
+          <div class="analytics-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Visitor</th>
+                  <th>Location</th>
+                  <th>Views</th>
+                  <th>Clicks</th>
+                  <th>Videos</th>
+                  <th>Last seen</th>
+                </tr>
+              </thead>
+              <tbody data-visitor-rows></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="analytics-card">
+          <div>
+            <p class="eyebrow">Activity</p>
+            <h3>Recent events</h3>
+          </div>
+          <div class="event-list" data-event-list></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="analytics-admin.js"></script>
+    <script src="modern-interactions.js"></script>
+    <script src="ultra-interactions.js"></script>
+  </body>
+</html>

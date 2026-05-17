@@ -26,9 +26,12 @@ const REPORTS_FILE = path.join(DATA_DIR, "reports.json");
 const SUBSCRIBERS_FILE = path.join(DATA_DIR, "subscribers.json");
 const EMAIL_CODES_FILE = path.join(DATA_DIR, "email-codes.json");
 const EMAIL_OUTBOX_FILE = path.join(DATA_DIR, "email-outbox.json");
+const ANALYTICS_FILE = path.join(DATA_DIR, "analytics.json");
 const PORT = Number(process.env.PORT || 8090);
 const MAX_UPLOAD_BYTES = 250 * 1024 * 1024;
 const SESSION_HOURS = 12;
+const MAX_ANALYTICS_EVENTS = 5000;
+const geoCache = new Map();
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -139,6 +142,7 @@ async function ensureStore() {
   await ensureJsonFile(SUBSCRIBERS_FILE, []);
   await ensureJsonFile(EMAIL_CODES_FILE, []);
   await ensureJsonFile(EMAIL_OUTBOX_FILE, []);
+  await ensureJsonFile(ANALYTICS_FILE, []);
 }
 
 async function ensureJsonFile(file, fallback) {
@@ -256,6 +260,131 @@ function adminEmail(auth) {
 function sanitizeEmail(value) {
   const email = String(value || "").trim().toLowerCase();
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : "";
+}
+
+function cleanText(value, max = 180) {
+  return String(value || "").replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+function cleanPhone(value) {
+  return String(value || "").replace(/[^\d+]/g, "").slice(0, 24);
+}
+
+function clientIp(req) {
+  const forwarded = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+  const ip = forwarded || req.socket?.remoteAddress || "";
+  return ip.replace(/^::ffff:/, "");
+}
+
+function isPrivateIp(ip) {
+  return !ip
+    || ip === "::1"
+    || ip === "127.0.0.1"
+    || ip.startsWith("10.")
+    || ip.startsWith("192.168.")
+    || /^172\.(1[6-9]|2\d|3[0-1])\./.test(ip);
+}
+
+function analyticsHash(value) {
+  const salt = process.env.ANALYTICS_SALT || process.env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL;
+  return crypto.createHash("sha256").update(`${salt}:${value}`).digest("hex").slice(0, 24);
+}
+
+async function lookupGeo(ip) {
+  if (isPrivateIp(ip)) return null;
+  if (geoCache.has(ip)) return geoCache.get(ip);
+
+  const token = cleanText(process.env.IPINFO_TOKEN, 160);
+  if (!token) return null;
+
+  try {
+    const response = await fetch(`https://api.ipinfo.io/lite/${encodeURIComponent(ip)}?token=${encodeURIComponent(token)}`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    const geo = {
+      country: cleanText(data.country || data.country_name, 80),
+      countryCode: cleanText(data.country_code || data.countryCode, 8),
+      continent: cleanText(data.continent || data.continent_name, 80),
+    };
+    geoCache.set(ip, geo);
+    return geo;
+  } catch {
+    return null;
+  }
+}
+
+function analyticsSummary(events) {
+  const pageViews = events.filter((event) => event.type === "page_view");
+  const clicks = events.filter((event) => event.type === "click");
+  const videoPlays = events.filter((event) => event.type === "video_play");
+  const sessions = new Map();
+  const topPages = new Map();
+  const topClicks = new Map();
+
+  events.forEach((event) => {
+    if (event.type === "page_view") {
+      const key = event.path || "/";
+      topPages.set(key, (topPages.get(key) || 0) + 1);
+    }
+    if (event.type === "click") {
+      const key = event.label || event.href || "Unknown click";
+      topClicks.set(key, (topClicks.get(key) || 0) + 1);
+    }
+    if (!event.sessionId) return;
+    const current = sessions.get(event.sessionId) || {
+      sessionId: event.sessionId,
+      knownName: "",
+      knownEmail: "",
+      knownPhone: "",
+      country: "",
+      countryCode: "",
+      continent: "",
+      timezone: "",
+      language: "",
+      pageViews: 0,
+      clicks: 0,
+      videoPlays: 0,
+      firstSeen: event.createdAt,
+      lastSeen: event.createdAt,
+    };
+    current.knownName = event.knownName || current.knownName;
+    current.knownEmail = event.knownEmail || current.knownEmail;
+    current.knownPhone = event.knownPhone || current.knownPhone;
+    current.country = event.geo?.country || current.country;
+    current.countryCode = event.geo?.countryCode || current.countryCode;
+    current.continent = event.geo?.continent || current.continent;
+    current.timezone = event.timezone || current.timezone;
+    current.language = event.language || current.language;
+    current.firstSeen = current.firstSeen < event.createdAt ? current.firstSeen : event.createdAt;
+    current.lastSeen = current.lastSeen > event.createdAt ? current.lastSeen : event.createdAt;
+    if (event.type === "page_view") current.pageViews += 1;
+    if (event.type === "click") current.clicks += 1;
+    if (event.type === "video_play") current.videoPlays += 1;
+    sessions.set(event.sessionId, current);
+  });
+
+  const sortedPairs = (map) => [...map.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([label, count]) => ({ label, count }));
+
+  return {
+    totals: {
+      events: events.length,
+      pageViews: pageViews.length,
+      clicks: clicks.length,
+      videoPlays: videoPlays.length,
+      sessions: sessions.size,
+      knownVisitors: [...sessions.values()].filter((session) => session.knownName || session.knownEmail || session.knownPhone).length,
+    },
+    topPages: sortedPairs(topPages),
+    topClicks: sortedPairs(topClicks),
+    visitors: [...sessions.values()].sort((a, b) => b.lastSeen.localeCompare(a.lastSeen)).slice(0, 60),
+    recentEvents: events.slice(0, 120),
+    geoConfigured: Boolean(process.env.IPINFO_TOKEN),
+  };
 }
 
 function maskEmail(email) {
@@ -765,6 +894,11 @@ async function publicMedia() {
   return media.filter((item) => item.published !== false).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
+async function publicStories() {
+  const media = await publicMedia();
+  return media.filter((item) => item.kind === "video" && item.featureStory === true);
+}
+
 async function requireAdmin(req, res) {
   const auth = await authConfig();
   if (!auth) {
@@ -1078,6 +1212,10 @@ async function handleApi(req, res, url) {
     return sendJson(res, 200, { media: await publicMedia() });
   }
 
+  if (url.pathname === "/api/public/stories" && req.method === "GET") {
+    return sendJson(res, 200, { stories: await publicStories() });
+  }
+
   if (url.pathname === "/api/public/campaigns" && req.method === "GET") {
     const campaigns = await readJson(CAMPAIGNS_FILE, DEFAULT_CAMPAIGNS);
     return sendJson(res, 200, { campaigns: campaigns.filter((item) => item.status !== "hidden") });
@@ -1159,6 +1297,40 @@ async function handleApi(req, res, url) {
       html: "<p>Jazakum Allahu khairan.</p><p>You will receive Al-Ihsan Charity Foundation project updates and campaign reports.</p>",
     });
     return sendJson(res, 200, { ok: true });
+  }
+
+  if (url.pathname === "/api/analytics/event" && req.method === "POST") {
+    const body = await readJsonBody(req, 64 * 1024);
+    if (body.consent !== "granted") return sendJson(res, 202, { stored: false });
+    const type = cleanText(body.type, 40);
+    if (!["page_view", "click", "video_play"].includes(type)) {
+      return sendJson(res, 400, { error: "Unsupported analytics event." });
+    }
+    const ip = clientIp(req);
+    const geo = await lookupGeo(ip);
+    const event = {
+      id: crypto.randomUUID(),
+      type,
+      label: cleanText(body.label, 180),
+      path: cleanText(body.path, 220),
+      href: cleanText(body.href, 320),
+      referrer: cleanText(body.referrer, 320),
+      pageTitle: cleanText(body.pageTitle, 180),
+      sessionId: cleanText(body.sessionId, 120),
+      knownName: cleanText(body.knownName, 120),
+      knownEmail: sanitizeEmail(body.knownEmail),
+      knownPhone: cleanPhone(body.knownPhone),
+      timezone: cleanText(body.timezone, 80),
+      language: cleanText(body.language, 32),
+      userAgent: cleanText(req.headers["user-agent"], 320),
+      ipHash: ip ? analyticsHash(ip) : "",
+      geo,
+      createdAt: new Date().toISOString(),
+    };
+    const events = await readJson(ANALYTICS_FILE, []);
+    events.unshift(event);
+    await fs.writeFile(ANALYTICS_FILE, JSON.stringify(events.slice(0, MAX_ANALYTICS_EVENTS), null, 2));
+    return sendJson(res, 202, { stored: true });
   }
 
   if (url.pathname === "/api/admin/mtn/config" && req.method === "GET") {
@@ -1464,6 +1636,11 @@ async function handleApi(req, res, url) {
     return sendJson(res, 200, { media: await readJson(MEDIA_FILE, []) });
   }
 
+  if (url.pathname === "/api/admin/analytics" && req.method === "GET") {
+    if (!(await requireAdmin(req, res))) return;
+    return sendJson(res, 200, analyticsSummary(await readJson(ANALYTICS_FILE, [])));
+  }
+
   if (url.pathname === "/api/admin/upload" && req.method === "POST") {
     if (!(await requireAdmin(req, res))) return;
     const contentType = req.headers["content-type"] || "";
@@ -1491,6 +1668,8 @@ async function handleApi(req, res, url) {
       title: (fields.title || original).trim(),
       caption: (fields.caption || "").trim(),
       alt: (fields.alt || fields.title || original).trim(),
+      storyLabel: cleanText(fields.storyLabel, 80),
+      featureStory: filePart.type.startsWith("video/") && fields.featureStory === "on",
       mime: filePart.type,
       original,
       size: filePart.data.length,
@@ -1524,6 +1703,7 @@ async function serveStatic(req, res, url) {
   if (pathname === "/master") pathname = "/master.html";
   if (pathname === "/pay" || pathname === "/donate") pathname = "/pay.html";
   if (pathname === "/portal") pathname = "/portal.html";
+  if (pathname === "/analytics") pathname = "/analytics.html";
   const staticRoot = pathname.startsWith("/uploads/") ? UPLOAD_DIR : ROOT;
   const relativePath = pathname.startsWith("/uploads/") ? pathname.slice("/uploads/".length) : pathname;
   const file = path.normalize(path.join(staticRoot, relativePath));

@@ -12,6 +12,8 @@ const sendAdminCode = document.querySelector("[data-send-admin-code]");
 const emailAuthStatus = document.querySelector("[data-email-auth-status]");
 const fileInput = document.querySelector("[data-file-input]");
 const fileName = document.querySelector("[data-file-name]");
+const storyControls = document.querySelector("[data-story-controls]");
+const featureStoryInput = document.querySelector("[data-feature-story]");
 const uploadForm = document.querySelector("[data-upload-form]");
 const uploadStatus = document.querySelector("[data-upload-status]");
 const library = document.querySelector("[data-library]");
@@ -170,7 +172,11 @@ document.querySelector("[data-logout]").addEventListener("click", async () => {
 document.querySelector("[data-refresh]").addEventListener("click", loadLibrary);
 
 fileInput.addEventListener("change", () => {
-  fileName.textContent = fileInput.files[0]?.name || "No file selected";
+  const file = fileInput.files[0];
+  fileName.textContent = file?.name || "No file selected";
+  const isVideo = Boolean(file?.type?.startsWith("video/"));
+  storyControls?.classList.toggle("is-active", isVideo);
+  if (featureStoryInput) featureStoryInput.checked = isVideo;
 });
 
 uploadForm.addEventListener("submit", async (event) => {
@@ -182,6 +188,7 @@ uploadForm.addEventListener("submit", async (event) => {
     await api("/api/admin/upload", { method: "POST", body: form });
     uploadForm.reset();
     fileName.textContent = "No file selected";
+    storyControls?.classList.remove("is-active");
     setStatus(uploadStatus, "Published to the website.");
     window.siteToast?.("Media published", "The field update is now available on the public site.");
     await loadLibrary();
@@ -381,6 +388,7 @@ function renderMedia(item) {
     <div>
       <h3>${escapeHtml(item.title || "Untitled media")}</h3>
       <p>${escapeHtml(item.caption || "Published to the public website.")}</p>
+      ${item.kind === "video" && item.featureStory ? `<span class="media-chip">Homepage story</span>` : ""}
       <button class="btn btn-secondary" type="button"><i data-lucide="trash-2" aria-hidden="true"></i>Delete</button>
     </div>
   `;

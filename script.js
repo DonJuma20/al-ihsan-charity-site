@@ -754,6 +754,31 @@ async function loadManagedMedia() {
   section.hidden = false;
 }
 
+async function loadFieldStories() {
+  const grid = document.querySelector("[data-story-grid]");
+  if (!grid) return;
+
+  try {
+    const response = await fetch("/api/public/stories", { credentials: "same-origin" });
+    if (!response.ok) return;
+    const data = await response.json();
+    const stories = Array.isArray(data.stories) ? data.stories.slice(0, 3) : [];
+    if (!stories.length) return;
+
+    grid.innerHTML = stories.map((item) => `
+      <article class="story-card reveal is-visible">
+        <video controls playsinline preload="metadata">
+          <source src="${escapeHtml(item.src)}" type="${escapeHtml(item.mime || "video/mp4")}">
+        </video>
+        <div>
+          <span>${escapeHtml(item.storyLabel || "Field update")}</span>
+          <h3>${escapeHtml(item.title || "New field story")}</h3>
+        </div>
+      </article>
+    `).join("");
+  } catch {}
+}
+
 const subscriberForm = document.querySelector("[data-subscriber-form]");
 const subscriberStatus = document.querySelector("[data-subscriber-status]");
 const sendSubscriberCode = document.querySelector("[data-send-subscriber-code]");
@@ -820,4 +845,5 @@ function escapeHtml(value) {
 inlineDonation.update();
 modalDonation.update();
 loadMtnStatus();
+loadFieldStories();
 loadManagedMedia();

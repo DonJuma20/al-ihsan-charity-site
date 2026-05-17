@@ -78,6 +78,7 @@
           </div>
           <div class="dashboard-actions">
             <a class="btn btn-secondary" href="/" target="_blank" rel="noopener">Open public site</a>
+            <a class="btn btn-secondary" href="/analytics.html" target="_blank" rel="noopener">Open analytics</a>
             <button class="btn btn-ghost" type="button" data-logout>Logout</button>
           </div>
         </div>
@@ -89,6 +90,7 @@
           <a href="#studio-campaigns"><span><i data-lucide="target" aria-hidden="true"></i></span>Campaigns</a>
           <a href="#studio-reports"><span><i data-lucide="clipboard-check" aria-hidden="true"></i></span>Reports</a>
           <a href="#studio-email"><span><i data-lucide="mail-check" aria-hidden="true"></i></span>Email</a>
+          <a href="/analytics.html" target="_blank" rel="noopener"><span><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i></span>Analytics</a>
         </nav>
 
         <section class="studio-metrics" aria-label="Studio overview">
@@ -133,6 +135,17 @@
             Caption
             <textarea name="caption" rows="3" placeholder="A short donor-facing story about what happened in the field."></textarea>
           </label>
+
+          <div class="story-controls" data-story-controls>
+            <label class="check-line">
+              <input name="featureStory" type="checkbox" data-feature-story>
+              <span>Feature this video in the homepage Field stories section</span>
+            </label>
+            <label>
+              Story label
+              <input name="storyLabel" type="text" placeholder="Water projects">
+            </label>
+          </div>
 
           <div class="upload-actions">
             <button class="btn btn-primary" type="submit">Publish media</button>
