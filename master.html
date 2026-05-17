@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Master Page | Al-Ihsan Charity Foundation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/al-ihsan-mark.png">
+    <link rel="stylesheet" href="master.css">
+    <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="ultra.css">
+  </head>
+  <body>
+    <main class="master-shell">
+      <section class="master-hero">
+        <a class="brand" href="/" aria-label="Open public website">
+          <img src="assets/images/al-ihsan-mark.png" alt="">
+          <span>
+            <strong>Al-Ihsan</strong>
+            <small>Master Studio</small>
+          </span>
+        </a>
+        <div>
+          <p class="eyebrow">Master studio</p>
+          <h1>Run the website like a living charity newsroom.</h1>
+          <p>
+            Publish field media, update prices, manage campaigns, connect donation routes, and keep every donor-facing page current from one secure place.
+          </p>
+        </div>
+      </section>
+
+      <section class="auth-panel" data-auth-panel>
+        <div>
+          <p class="eyebrow" data-auth-mode>Admin login</p>
+          <h2 data-auth-title>Enter your master password.</h2>
+          <p data-auth-copy>
+            This page is protected by a hashed password and secure server session. Create the password once, then use it whenever you manage the site.
+          </p>
+        </div>
+
+        <form class="auth-form" data-auth-form>
+          <label for="password" data-password-label>Password</label>
+          <input id="password" name="password" type="password" minlength="10" autocomplete="current-password" required>
+          <button class="btn btn-primary" type="submit" data-auth-submit>Unlock master page</button>
+          <p class="status" data-auth-status></p>
+        </form>
+
+        <form class="auth-form email-auth-form" data-email-auth-form>
+          <label for="admin-email">Email code login</label>
+          <input id="admin-email" name="email" data-admin-email type="email" value="jumamuyita0@gmail.com" autocomplete="email" required>
+          <div class="field-grid">
+            <input name="code" data-admin-code type="text" inputmode="numeric" placeholder="6-digit code">
+            <button class="btn btn-secondary" type="button" data-send-admin-code>Send code</button>
+          </div>
+          <button class="btn btn-primary" type="submit">Login with email code</button>
+          <p class="status" data-email-auth-status></p>
+        </form>
+      </section>
+
+      <section class="dashboard" hidden data-dashboard>
+        <div class="dashboard-head">
+          <div>
+            <p class="eyebrow">Live publishing</p>
+            <h2>Upload photos and videos</h2>
+            <p>Accepted files: JPG, PNG, WebP, GIF, MP4, WebM, and MOV. Keep videos concise for faster donor viewing.</p>
+          </div>
+          <div class="dashboard-actions">
+            <a class="btn btn-secondary" href="/" target="_blank" rel="noopener">Open public site</a>
+            <button class="btn btn-ghost" type="button" data-logout>Logout</button>
+          </div>
+        </div>
+
+        <nav class="studio-nav" aria-label="Master page sections">
+          <a href="#studio-media"><span><i data-lucide="image-up" aria-hidden="true"></i></span>Media</a>
+          <a href="#studio-readiness"><span><i data-lucide="rocket" aria-hidden="true"></i></span>Launch</a>
+          <a href="#studio-payments"><span><i data-lucide="wallet-cards" aria-hidden="true"></i></span>Payments</a>
+          <a href="#studio-campaigns"><span><i data-lucide="target" aria-hidden="true"></i></span>Campaigns</a>
+          <a href="#studio-reports"><span><i data-lucide="clipboard-check" aria-hidden="true"></i></span>Reports</a>
+          <a href="#studio-email"><span><i data-lucide="mail-check" aria-hidden="true"></i></span>Email</a>
+        </nav>
+
+        <section class="studio-metrics" aria-label="Studio overview">
+          <article>
+            <span>Published media</span>
+            <strong data-metric-media>0</strong>
+          </article>
+          <article>
+            <span>Live campaigns</span>
+            <strong data-metric-campaigns>0</strong>
+          </article>
+          <article>
+            <span>Subscribers</span>
+            <strong data-metric-subscribers>0</strong>
+          </article>
+          <article>
+            <span>Launch readiness</span>
+            <strong data-metric-readiness>0%</strong>
+          </article>
+        </section>
+
+        <form class="upload-card" id="studio-media" data-upload-form>
+          <label class="dropzone" for="media">
+            <input id="media" name="media" type="file" accept="image/*,video/*" required data-file-input>
+            <span>Drop media here or choose a file</span>
+            <strong data-file-name>No file selected</strong>
+          </label>
+          <p class="quality-note">For crisp public images, upload the original camera file or original Google Photos export, not screenshots or forwarded thumbnails.</p>
+
+          <div class="field-grid">
+            <label>
+              Title
+              <input name="title" type="text" placeholder="Clean water project in Jinja" required>
+            </label>
+            <label>
+              Alt text
+              <input name="alt" type="text" placeholder="Children receiving clean water at a village pump">
+            </label>
+          </div>
+
+          <label>
+            Caption
+            <textarea name="caption" rows="3" placeholder="A short donor-facing story about what happened in the field."></textarea>
+          </label>
+
+          <div class="upload-actions">
+            <button class="btn btn-primary" type="submit">Publish media</button>
+            <p class="status" data-upload-status></p>
+          </div>
+        </form>
+
+        <section class="library-section">
+          <div class="library-title">
+            <div>
+              <p class="eyebrow">Website media</p>
+              <h2>Published library</h2>
+            </div>
+            <button class="btn btn-secondary" type="button" data-refresh>Refresh</button>
+          </div>
+          <div class="library-grid" data-library></div>
+        </section>
+
+        <section class="payment-readiness">
+          <div>
+            <p class="eyebrow">Automatic bank donations</p>
+            <h2>Payment gateway checklist</h2>
+            <p>
+              Automatic deposits need a verified payment gateway account. Add the foundation bank details inside the gateway dashboard, then connect live API keys on the server.
+            </p>
+          </div>
+          <div class="readiness-grid">
+            <article>
+              <strong>1</strong>
+              <h3>Settlement bank</h3>
+              <p>Account name, bank, branch, account number, SWIFT/BIC, and currency.</p>
+            </article>
+            <article>
+              <strong>2</strong>
+              <h3>KYC documents</h3>
+              <p>Registration documents, contact IDs, address, website, and bank proof.</p>
+            </article>
+            <article>
+              <strong>3</strong>
+              <h3>API keys</h3>
+              <p>Public key, secret key, consumer credentials, and webhook secret.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="connector-panel" id="studio-readiness" data-readiness-panel>
+          <div class="connector-head">
+            <span class="icon-tile"><i data-lucide="rocket" aria-hidden="true"></i></span>
+            <div>
+              <p class="eyebrow">Production readiness</p>
+              <h2>Launch checklist</h2>
+              <p class="status" data-readiness-status>Checking live launch requirements...</p>
+            </div>
+          </div>
+          <div class="readiness-board" data-readiness-board></div>
+        </section>
+
+        <section class="connector-panel" id="studio-payments" data-bank-admin>
+          <div class="connector-head">
+            <span class="icon-tile"><i data-lucide="landmark" aria-hidden="true"></i></span>
+            <div>
+              <p class="eyebrow">ABSA Uganda settlement</p>
+              <h2>Bank transfer control</h2>
+              <p class="status" data-bank-admin-status>Checking ABSA details...</p>
+            </div>
+            <a class="btn btn-secondary" href="/pay.html" target="_blank" rel="noopener">Preview donate page</a>
+          </div>
+
+          <form class="connector-card bank-connector-card" data-bank-config-form>
+            <div class="field-grid">
+              <label>
+                Account name
+                <input name="accountName" data-bank-account-name type="text" value="AL-IHSAN CHARITY FOUNDATION">
+              </label>
+              <label>
+                Bank
+                <input name="bankName" data-bank-name type="text" value="Absa Bank Uganda">
+              </label>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                Branch
+                <input name="branch" data-bank-branch type="text" placeholder="Branch name">
+              </label>
+              <label>
+                Account number
+                <input name="accountNumber" data-bank-account-number type="password" autocomplete="off" placeholder="Paste ABSA account number">
+                <p class="secret-hint" data-bank-account-mask></p>
+              </label>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                SWIFT/BIC
+                <input name="swift" data-bank-swift type="text" placeholder="ABSAUGKA">
+              </label>
+              <label>
+                Currency
+                <input name="currency" data-bank-currency type="text" value="UGX">
+              </label>
+            </div>
+
+            <label>
+              Donor transfer reference
+              <input name="referencePrefix" data-bank-reference type="text" value="AICF-DONATION">
+            </label>
+
+            <label>
+              Public instructions
+              <textarea name="instructions" data-bank-instructions rows="3">Use your name and donation cause as the transfer reference, then send proof for reconciliation.</textarea>
+            </label>
+
+            <button class="btn btn-primary" type="submit">Save ABSA details</button>
+          </form>
+        </section>
+
+        <section class="connector-panel" data-payment-suite>
+          <div class="connector-head">
+            <span class="icon-tile"><i data-lucide="wallet-cards" aria-hidden="true"></i></span>
+            <div>
+              <p class="eyebrow">Payment method suite</p>
+              <h2>Airtel and card controls</h2>
+              <p class="status" data-payment-admin-status>Checking payment methods...</p>
+            </div>
+            <a class="btn btn-secondary" href="/pay.html" target="_blank" rel="noopener">Payment page</a>
+          </div>
+
+          <form class="connector-grid" data-payment-config-form>
+            <div class="connector-card">
+              <img class="payment-brand-logo" src="assets/logos/airtel-logo.svg" alt="Airtel logo">
+              <label class="switch-line">
+                <span>Enable Airtel</span>
+                <input name="airtelEnabled" type="checkbox" data-airtel-enabled>
+              </label>
+              <label>
+                Provider
+                <input name="airtelProvider" data-airtel-provider type="text" value="Manual Airtel Money">
+              </label>
+              <label>
+                Airtel merchant phone
+                <input name="airtelMerchantPhone" data-airtel-phone type="tel" placeholder="256...">
+              </label>
+              <label>
+                Airtel payment link
+                <input name="airtelPaymentLink" data-airtel-link type="url" placeholder="https://...">
+              </label>
+              <label>
+                Airtel instructions
+                <textarea name="airtelInstructions" data-airtel-instructions rows="3">Use Airtel Money and send proof for reconciliation.</textarea>
+              </label>
+            </div>
+
+            <div class="connector-card">
+              <span class="icon-tile"><i data-lucide="credit-card" aria-hidden="true"></i></span>
+              <label>
+                Card provider
+                <select name="cardProvider" data-card-provider>
+                  <option value="not configured">Not configured</option>
+                  <option value="Pesapal">Pesapal</option>
+                  <option value="Flutterwave">Flutterwave</option>
+                  <option value="DPO">DPO</option>
+                  <option value="Network International">Network International</option>
+                  <option value="Other licensed gateway">Other licensed gateway</option>
+                </select>
+              </label>
+              <label>
+                Provider checkout URL
+                <input name="cardCheckoutUrl" data-card-checkout-url type="url" placeholder="https://...">
+              </label>
+              <label>
+                Public key
+                <input name="paymentPublicKey" data-card-public-key type="password" autocomplete="off" placeholder="Paste new public key only">
+                <p class="secret-hint" data-card-public-mask></p>
+              </label>
+              <label>
+                Secret key
+                <input name="paymentSecretKey" data-card-secret-key type="password" autocomplete="off" placeholder="Paste new secret key only">
+                <p class="secret-hint" data-card-secret-mask></p>
+              </label>
+              <button class="btn btn-primary" type="submit">Save payment methods</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="connector-panel" id="studio-campaigns" data-campaign-admin>
+          <div class="connector-head">
+            <span class="icon-tile"><i data-lucide="target" aria-hidden="true"></i></span>
+            <div>
+              <p class="eyebrow">Campaign engine</p>
+              <h2>Goal builder</h2>
+              <p class="status" data-campaign-status>Create a campaign like building 10 mosques; the public progress updates itself.</p>
+            </div>
+          </div>
+
+          <div class="connector-grid">
+            <form class="connector-card" data-campaign-form>
+              <input type="hidden" name="id" data-campaign-id>
+              <label>
+                Campaign title
+                <input name="title" data-campaign-title type="text" value="Build 10 village masjids">
+              </label>
+              <label>
+                Donation cause
+                <input name="cause" data-campaign-cause type="text" value="Masjid construction">
+              </label>
+              <div class="field-grid">
+                <label>
+                  Unit name
+                  <input name="unitName" data-campaign-unit-name type="text" value="masjid">
+                </label>
+                <label>
+                  Icon
+                  <input name="icon" data-campaign-icon type="text" value="landmark">
+                </label>
+              </div>
+              <div class="field-grid">
+                <label>
+                  Unit cost
+                  <input name="unitCost" data-campaign-unit-cost type="number" min="0" value="20000">
+                </label>
+                <label>
+                  Quantity
+                  <input name="quantity" data-campaign-quantity type="number" min="1" value="10">
+                </label>
+              </div>
+              <div class="field-grid">
+                <label>
+                  Raised so far
+                  <input name="raised" data-campaign-raised type="number" min="0" value="0">
+                </label>
+                <label>
+                  Currency
+                  <input name="currency" data-campaign-currency type="text" value="USD">
+                </label>
+              </div>
+              <label>
+                Target
+                <input name="target" data-campaign-target type="number" min="1" value="200000">
+              </label>
+              <label>
+                Latest price note
+                <input name="priceNote" data-campaign-price-note type="text" value="$20,000 funds one complete village masjid, from planning and materials to worship-ready completion.">
+              </label>
+              <div class="field-grid">
+                <label>
+                  Location
+                  <input name="location" data-campaign-location type="text" placeholder="Jinja district">
+                </label>
+                <label>
+                  Beneficiaries
+                  <input name="beneficiaries" data-campaign-beneficiaries type="text" placeholder="450 worshippers">
+                </label>
+              </div>
+              <div class="field-grid">
+                <label>
+                  Milestone
+                  <input name="milestone" data-campaign-milestone type="text" placeholder="Foundation phase complete">
+                </label>
+                <label>
+                  Next need
+                  <input name="nextNeed" data-campaign-next-need type="text" placeholder="Roofing materials">
+                </label>
+              </div>
+              <label>
+                Campaign words
+                <textarea name="description" data-campaign-description rows="3">A long-term sadaqah jariyah campaign to build ten complete village masjids in Uganda.</textarea>
+              </label>
+              <button class="btn btn-primary" type="submit">Save campaign</button>
+            </form>
+
+            <div class="connector-card">
+              <div>
+                <p class="eyebrow">Live campaigns</p>
+                <h3>Public goal list</h3>
+              </div>
+              <div class="campaign-list" data-campaign-list></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="connector-panel" id="studio-reports" data-report-admin>
+          <div class="connector-head">
+            <span class="icon-tile"><i data-lucide="clipboard-check" aria-hidden="true"></i></span>
+            <div>
+              <p class="eyebrow">Transparency ledger</p>
+              <h2>Verified reports</h2>
+              <p class="status" data-report-status>Publish real delivery notes donors can trust.</p>
+            </div>
+          </div>
+
+          <div class="connector-grid">
+            <form class="connector-card" data-report-form>
+              <input type="hidden" name="id" data-report-id>
+              <label>
+                Report title
+                <input name="title" data-report-title type="text" placeholder="Water well handed over in Jinja">
+              </label>
+              <label>
+                Cause
+                <input name="cause" data-report-cause type="text" placeholder="Water well construction">
+              </label>
+              <div class="field-grid">
+                <label>
+                  Location
+                  <input name="location" data-report-location type="text" placeholder="Jinja, Uganda">
+                </label>
+                <label>
+                  Metric
+                  <input name="metric" data-report-metric type="text" placeholder="1 well completed">
+                </label>
+              </div>
+              <div class="field-grid">
+                <label>
+                  Delivery date
+                  <input name="deliveredOn" data-report-date type="date">
+                </label>
+                <label>
+                  Icon
+                  <input name="icon" data-report-icon type="text" value="clipboard-check">
+                </label>
+              </div>
+              <label>
+                Summary
+                <textarea name="summary" data-report-summary rows="4" placeholder="What was delivered, who benefited, and what donors should know."></textarea>
+              </label>
+              <button class="btn btn-primary" type="submit">Publish report</button>
+            </form>
+
+            <div class="connector-card">
+              <div>
+                <p class="eyebrow">Public ledger</p>
+                <h3>Latest reports</h3>
+              </div>
+              <div class="campaign-list" data-report-list></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="connector-panel" id="studio-email" data-email-studio>
+          <div class="connector-head">
+            <span class="icon-tile"><i data-lucide="mail-check" aria-hidden="true"></i></span>
+            <div>
+              <p class="eyebrow">Email and subscribers</p>
+              <h2>Update studio</h2>
+              <p class="status" data-email-status>Checking subscribers...</p>
+            </div>
+          </div>
+
+          <div class="connector-grid">
+            <form class="connector-card" data-update-email-form>
+              <label>
+                Subject
+                <input name="subject" data-update-subject type="text" value="Al-Ihsan field update">
+              </label>
+              <label>
+                Headline
+                <input name="headline" data-update-headline type="text" value="A new mercy reached the field">
+              </label>
+              <label>
+                Update message
+                <textarea name="message" data-update-message rows="7">Assalamu alaikum. Here is the latest field update from Al-Ihsan Charity Foundation...</textarea>
+              </label>
+              <button class="btn btn-primary" type="submit">Send update</button>
+            </form>
+
+            <div class="connector-card">
+              <div>
+                <p class="eyebrow">Audience</p>
+                <h3 data-subscriber-count>0 subscribers</h3>
+              </div>
+              <div class="campaign-list" data-email-outbox></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="connector-panel" data-mtn-admin>
+          <div class="connector-head">
+            <span class="icon-tile"><i data-lucide="smartphone-nfc" aria-hidden="true"></i></span>
+            <div>
+              <p class="eyebrow">MTN MoMo connector</p>
+              <h2>RequestToPay control</h2>
+              <p class="status" data-mtn-admin-status>Checking MTN connection...</p>
+            </div>
+            <a class="btn btn-secondary" href="https://momodeveloper.mtn.com/product#product=collections" target="_blank" rel="noopener">Collections</a>
+          </div>
+
+          <div class="connector-grid">
+            <form class="connector-card" data-mtn-config-form>
+              <label class="switch-line">
+                <span>Enable MTN</span>
+                <input name="enabled" type="checkbox" data-mtn-enabled>
+              </label>
+
+              <label>
+                Base URL
+                <input name="baseUrl" data-mtn-base-url type="url" value="https://sandbox.momodeveloper.mtn.com">
+              </label>
+
+              <div class="field-grid">
+                <label>
+                  Environment
+                  <input name="targetEnvironment" data-mtn-environment type="text" value="sandbox">
+                </label>
+                <label>
+                  Currency
+                  <input name="currency" data-mtn-currency type="text" maxlength="3" value="EUR">
+                </label>
+              </div>
+
+              <label>
+                Merchant phone
+                <input name="merchantPhone" data-mtn-merchant-phone type="tel" value="256780937446">
+              </label>
+
+              <label>
+                Collections subscription key
+                <input name="subscriptionKey" data-mtn-subscription-key type="password" autocomplete="off" placeholder="Paste new key only">
+                <p class="secret-hint" data-mtn-subscription-mask></p>
+              </label>
+
+              <label>
+                API user
+                <input name="apiUser" data-mtn-api-user type="password" autocomplete="off" placeholder="Paste new API user only">
+                <p class="secret-hint" data-mtn-user-mask></p>
+              </label>
+
+              <label>
+                API key
+                <input name="apiKey" data-mtn-api-key type="password" autocomplete="off" placeholder="Paste new API key only">
+                <p class="secret-hint" data-mtn-key-mask></p>
+              </label>
+
+              <button class="btn btn-primary" type="submit">Save MTN keys</button>
+            </form>
+
+            <form class="connector-card" data-mtn-provision-form>
+              <div>
+                <p class="eyebrow">Sandbox shortcut</p>
+                <h3>Provision API user</h3>
+                <p>After Collections is subscribed, paste the primary key here and create sandbox credentials automatically.</p>
+              </div>
+
+              <label>
+                Collections key
+                <input name="subscriptionKey" data-mtn-provision-key type="password" autocomplete="off" placeholder="Primary subscription key">
+              </label>
+
+              <label>
+                Callback host
+                <input name="callbackHost" data-mtn-callback-host type="url" value="https://alihsancharity.org">
+              </label>
+
+              <button class="btn btn-secondary" type="submit">Provision sandbox</button>
+              <p class="status" data-mtn-provision-status></p>
+            </form>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="master.js"></script>
+    <script src="modern-interactions.js"></script>
+    <script src="ultra-interactions.js"></script>
+  </body>
+</html>

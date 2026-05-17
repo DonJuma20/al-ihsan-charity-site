@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Al-Ihsan Host Check</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #fff7f8;
+        color: #28060d;
+      }
+
+      main {
+        width: min(860px, calc(100% - 32px));
+        margin: 40px auto;
+      }
+
+      h1 {
+        color: #c8102e;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+
+      article {
+        border: 1px solid rgba(40, 6, 13, 0.12);
+        border-radius: 10px;
+        background: #fff;
+        padding: 14px;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        margin-top: 10px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Host asset check</h1>
+      <p>If both photos show below, the host is reading the right folder and serving assets correctly.</p>
+      <div class="grid">
+        <article>
+          <strong>JPG test</strong>
+          <img src="assets/images/optimized/well-community.jpg" alt="JPG test">
+        </article>
+        <article>
+          <strong>WEBP test</strong>
+          <img src="assets/images/optimized/well-community.webp" alt="WEBP test">
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

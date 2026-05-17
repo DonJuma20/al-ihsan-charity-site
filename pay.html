@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Donate to Al-Ihsan Charity Foundation through MTN MoMo, card, bank transfer request, or WhatsApp pledge.">
+    <title>Donate | Al-Ihsan Charity Foundation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/al-ihsan-mark.png">
+    <link rel="stylesheet" href="pay.css">
+    <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="ultra.css">
+  </head>
+  <body>
+    <header class="pay-header">
+      <a class="brand" href="/">
+        <img src="assets/images/al-ihsan-mark.png" alt="">
+        <span>
+          <strong>Al-Ihsan</strong>
+          <small>Donation Portal</small>
+        </span>
+      </a>
+      <div class="pay-links">
+        <a class="back-link" href="/portal.html">Donor portal</a>
+        <a class="back-link" href="/">Back to website</a>
+      </div>
+    </header>
+
+    <main class="pay-shell">
+      <section class="pay-hero">
+        <div>
+          <p class="eyebrow">Secure donation journey</p>
+          <h1>Choose the path that turns your intention into impact.</h1>
+          <p>
+            Pick a cause, confirm your gift, and continue through the payment route that is ready for you.
+          </p>
+        </div>
+        <aside class="summary-card" aria-label="Donation summary">
+          <span data-summary-frequency>Current gift</span>
+          <strong data-summary-amount>$30</strong>
+          <p data-summary-cause>General sadaqah and urgent needs</p>
+          <p class="impact" data-summary-impact>Your donation will support the most urgent approved charity project.</p>
+        </aside>
+      </section>
+
+      <section class="checkout-rail" aria-label="Donation steps">
+        <article class="is-active">
+          <strong>01</strong>
+          <span>Choose cause</span>
+        </article>
+        <article>
+          <strong>02</strong>
+          <span>Set amount</span>
+        </article>
+        <article>
+          <strong>03</strong>
+          <span>Pick route</span>
+        </article>
+      </section>
+
+      <section class="donation-builder">
+        <div class="builder-card">
+          <h2>Donation details</h2>
+          <div class="field-grid">
+            <label>
+              Cause
+              <select data-cause>
+                <option>General sadaqah and urgent needs</option>
+                <option>Water well construction</option>
+                <option>Masjid construction</option>
+                <option>Food packs and orphan feeding</option>
+                <option>Ramadhan iftar program</option>
+                <option>Qurban distribution</option>
+                <option>Qurban distribution - goat</option>
+                <option>Qurban distribution - lamb</option>
+                <option>Qurban distribution - bull</option>
+                <option>Quran distribution</option>
+                <option>Orphans, widows, and girl child empowerment</option>
+              </select>
+            </label>
+            <label>
+              Amount in USD
+              <input data-amount type="number" min="1" step="1" value="30">
+            </label>
+          </div>
+
+          <div class="amount-row" aria-label="Suggested donation amounts">
+            <button type="button" data-preset="10">$10</button>
+            <button type="button" data-preset="30">$30</button>
+            <button type="button" data-preset="80">$80</button>
+            <button type="button" data-preset="100">$100</button>
+            <button type="button" data-preset="400">$400</button>
+            <button type="button" data-preset="1100">$1,100</button>
+          </div>
+
+          <div class="frequency-row" role="group" aria-label="Donation frequency">
+            <button type="button" data-frequency="one-time" class="is-active">One-time</button>
+            <button type="button" data-frequency="monthly">Monthly pledge</button>
+          </div>
+          <p class="frequency-note" data-frequency-note>One-time gifts can continue through the available payment methods below.</p>
+
+          <section class="qurban-booking" data-qurban-booking hidden>
+            <div>
+              <p class="eyebrow">Qurban booking</p>
+              <h3>Choose the animal and quantity.</h3>
+            </div>
+            <div class="qurban-choice-row" role="group" aria-label="Qurban animal">
+              <button type="button" data-qurban-animal="goat" data-price="80">Goat <strong>$80</strong></button>
+              <button type="button" data-qurban-animal="lamb" data-price="100">Lamb <strong>$100</strong></button>
+              <button type="button" data-qurban-animal="bull" data-price="400">Bull <strong>$400</strong></button>
+            </div>
+            <div class="field-grid">
+              <label>
+                Quantity
+                <input data-qurban-quantity type="number" min="1" step="1" value="1">
+              </label>
+              <label>
+                Qurban for
+                <input data-qurban-for type="text" placeholder="Optional intention name">
+              </label>
+            </div>
+          </section>
+
+          <div class="checkout-signal" data-checkout-signal>
+            <span>Best current route</span>
+            <strong data-recommended-route>Checking methods...</strong>
+            <p data-recommended-copy>We are checking the strongest available path for this gift.</p>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              Donor name
+              <input data-name type="text" placeholder="Your name">
+            </label>
+            <label>
+              Email or phone
+              <input data-contact type="text" placeholder="Optional receipt contact">
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="methods-section">
+        <div class="methods-head">
+          <div>
+            <p class="eyebrow">Payment methods</p>
+            <h2>Pick your path</h2>
+          </div>
+          <p data-method-status>Checking available payment methods...</p>
+        </div>
+
+        <div class="methods-grid">
+          <article class="method-card is-recommended" data-method-card="mtn">
+            <img class="payment-logo" src="assets/logos/mtn-logo.svg" alt="MTN logo">
+            <div class="method-top">
+              <span>Best for Uganda</span>
+              <strong>MTN MoMo</strong>
+            </div>
+            <p>Donor receives a phone prompt and confirms with their MTN Mobile Money PIN.</p>
+            <label>
+              Donor MTN number
+              <input data-mtn-phone type="tel" inputmode="tel" placeholder="0780 000 000">
+            </label>
+            <button class="btn btn-primary" type="button" data-pay-mtn>Send MTN prompt</button>
+            <p class="status" data-mtn-message>Waiting for MTN setup status...</p>
+          </article>
+
+          <article class="method-card" data-method-card="card">
+            <div class="method-icon"><i data-lucide="credit-card" aria-hidden="true"></i></div>
+            <div class="method-top">
+              <span>International donors</span>
+              <strong>Visa / Mastercard</strong>
+            </div>
+            <p>Use this once a licensed card gateway is connected. Card data is never handled by this website.</p>
+            <button class="btn btn-secondary" type="button" data-pay-card>Open card checkout</button>
+            <p class="status" data-card-message>Checking card checkout setup...</p>
+          </article>
+
+          <article class="method-card" data-method-card="airtel">
+            <img class="payment-logo" src="assets/logos/airtel-logo.svg" alt="Airtel logo">
+            <div class="method-top">
+              <span>Mobile money</span>
+              <strong>Airtel Money</strong>
+            </div>
+            <p data-airtel-copy>Use Airtel Money after a merchant number, payment link, or aggregator is connected.</p>
+            <a class="btn btn-secondary" data-airtel-whatsapp target="_blank" rel="noopener">Ask for Airtel option</a>
+            <p class="status" data-airtel-message>Checking Airtel setup...</p>
+          </article>
+
+          <article class="method-card" data-method-card="bank">
+            <img class="payment-logo" src="assets/logos/absa-logo.svg" alt="Absa logo">
+            <div class="method-top">
+              <span>ABSA Uganda</span>
+              <strong>Bank transfer</strong>
+            </div>
+            <p>Use verified ABSA receiving details for local or international bank gifts.</p>
+            <div class="bank-details" data-bank-details></div>
+            <a class="btn btn-secondary" data-bank-whatsapp target="_blank" rel="noopener">Send transfer proof</a>
+            <p class="status" data-bank-message></p>
+          </article>
+
+          <article class="method-card" data-method-card="whatsapp">
+            <div class="method-icon"><i data-lucide="message-circle" aria-hidden="true"></i></div>
+            <div class="method-top">
+              <span>Human assistance</span>
+              <strong>WhatsApp pledge</strong>
+            </div>
+            <p>Send the donation pledge to the Al-Ihsan team and continue with direct guidance.</p>
+            <a class="btn btn-primary" data-whatsapp target="_blank" rel="noopener">Continue on WhatsApp</a>
+            <a class="email-link" data-email>Email pledge instead</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="process-section">
+        <h2>What happens after payment</h2>
+        <div class="process-grid">
+          <article><strong>01</strong><span>Donation request is created with your cause and amount.</span></article>
+          <article><strong>02</strong><span>You confirm through the selected payment method.</span></article>
+          <article><strong>03</strong><span>The foundation reconciles the payment and assigns it to the project.</span></article>
+          <article><strong>04</strong><span>Project updates and reports are shared after delivery.</span></article>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="pay.js"></script>
+    <script src="modern-interactions.js"></script>
+    <script src="ultra-interactions.js"></script>
+  </body>
+</html>

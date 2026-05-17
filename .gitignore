@@ -1,0 +1,8 @@
+.env
+data/*.json
+uploads/*
+!uploads/.gitkeep
+qa-*.png
+dist-hosting/
+al-ihsan-static-hosting.zip
+al-ihsan-node-app.zip

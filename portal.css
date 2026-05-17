@@ -1,0 +1,208 @@
+:root {
+  --red: #d7192f;
+  --red-deep: #850916;
+  --ink: #171412;
+  --muted: #6c625e;
+  --cream: #fff7f1;
+  --green: #07553d;
+  --line: rgba(23, 20, 18, 0.12);
+  --shadow: 0 24px 70px rgba(77, 11, 17, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fff, var(--cream));
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, "Helvetica Neue", Arial, sans-serif;
+}
+
+.portal-header,
+.portal-shell {
+  width: min(1080px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.portal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand img {
+  width: 52px;
+  height: 52px;
+  border: 2px solid rgba(215, 25, 47, 0.22);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.brand span {
+  display: grid;
+  line-height: 1.05;
+}
+
+.brand strong {
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.brand small,
+.back-link {
+  font-weight: 800;
+}
+
+.portal-hero {
+  min-height: 320px;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(23, 20, 18, 0.94), rgba(133, 9, 22, 0.88)),
+    url("assets/images/optimized/well-community.webp") center / cover;
+  color: #fff;
+  padding: clamp(24px, 5vw, 48px);
+  box-shadow: var(--shadow);
+}
+
+.portal-hero h1 {
+  max-width: 760px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 0.98;
+}
+
+.portal-hero p {
+  max-width: 620px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #ffd5d9;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.portal-auth,
+.portal-dashboard {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.portal-auth {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 24px;
+}
+
+.portal-auth form,
+.receipt-list {
+  display: grid;
+  gap: 14px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  font-weight: 900;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px 14px;
+  font: inherit;
+}
+
+.status {
+  min-height: 22px;
+  margin: 0;
+  color: var(--green);
+  font-weight: 800;
+}
+
+.status.is-error {
+  color: var(--red-deep);
+}
+
+.portal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.receipt-card {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 18px;
+}
+
+.receipt-card strong {
+  font-size: 1.15rem;
+}
+
+.receipt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.receipt-meta span {
+  border-radius: 999px;
+  background: #e3f5ed;
+  color: var(--green);
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.receipt-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .portal-header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .portal-auth,
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

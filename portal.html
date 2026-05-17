@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="Open your Al-Ihsan donor portal to review donation history and receipts.">
+    <title>Donor Portal | Al-Ihsan Charity Foundation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/al-ihsan-mark.png">
+    <link rel="stylesheet" href="portal.css">
+    <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="ultra.css">
+  </head>
+  <body>
+    <header class="portal-header">
+      <a class="brand" href="/">
+        <img src="assets/images/al-ihsan-mark.png" alt="">
+        <span>
+          <strong>Al-Ihsan</strong>
+          <small>Donor Portal</small>
+        </span>
+      </a>
+      <a class="back-link" href="/">Back to website</a>
+    </header>
+
+    <main class="portal-shell">
+      <section class="portal-hero">
+        <div>
+          <p class="eyebrow">Donor portal</p>
+          <h1>See the giving trail behind your support.</h1>
+          <p>Review donation references, statuses, and the record of every gift linked to your email in one private place.</p>
+        </div>
+      </section>
+
+      <section class="portal-auth" data-portal-auth>
+        <div>
+          <p class="eyebrow">Secure login</p>
+          <h2>Email code access</h2>
+          <p>We send a short code to the same email used for your donation contact.</p>
+        </div>
+        <form data-portal-form>
+          <label>
+            Email
+            <input name="email" data-portal-email type="email" placeholder="you@example.com" required>
+          </label>
+          <div class="field-grid">
+            <label>
+              Code
+              <input name="code" data-portal-code type="text" inputmode="numeric" placeholder="6-digit code">
+            </label>
+            <button class="btn btn-secondary" type="button" data-send-portal-code>Send code</button>
+          </div>
+          <button class="btn btn-primary" type="submit">Open portal</button>
+          <p class="status" data-portal-status></p>
+        </form>
+      </section>
+
+      <section class="portal-dashboard" hidden data-portal-dashboard>
+        <div class="portal-head">
+          <div>
+            <p class="eyebrow">Private account</p>
+            <h2 data-portal-email-label></h2>
+          </div>
+          <button class="btn btn-secondary" type="button" data-portal-logout>Logout</button>
+        </div>
+        <div class="receipt-list" data-receipt-list></div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="portal.js"></script>
+    <script src="modern-interactions.js"></script>
+    <script src="ultra-interactions.js"></script>
+  </body>
+</html>

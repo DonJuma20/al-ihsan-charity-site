@@ -1,0 +1,16 @@
+DEPLOYMENT OPTIONS
+
+1. al-ihsan-static-hosting.zip
+   Use this for ordinary htdocs / shared hosting.
+   This publishes the public website files cleanly and keeps the donation page usable with direct contact routes.
+
+2. al-ihsan-node-app.zip
+   Use this on a Node-capable host.
+   This is the version needed for the secure master page, uploads, donor portal, email code login, live API endpoints, campaign saving, and payment integrations.
+
+Never upload:
+- .env
+- data/auth.json
+- data/payments.json
+- QA screenshots
+- local secret files
