@@ -2,7 +2,7 @@ services:
   - type: web
     name: al-ihsan-charity
     runtime: node
-    plan: starter
+    plan: free
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /
@@ -10,7 +10,7 @@ services:
       - key: NODE_VERSION
         value: 20
       - key: APP_STORAGE_DIR
-        value: /var/data
+        value: /tmp/al-ihsan
       - key: PUBLIC_SITE_URL
         sync: false
       - key: ADMIN_EMAIL
@@ -73,7 +73,4 @@ services:
         sync: false
       - key: PAYMENT_SECRET_KEY
         sync: false
-    disk:
-      name: al-ihsan-storage
-      mountPath: /var/data
-      sizeGB: 1
+
