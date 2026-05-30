@@ -69,6 +69,7 @@ const GOALS = {
 
 let activeCampaigns = [];
 const staticPublicData = window.AL_IHSAN_STATIC_DATA || {};
+const LIVE_REFRESH_MS = 15000;
 
 function formatCurrency(value) {
   return new Intl.NumberFormat("en-US", {
@@ -458,10 +459,12 @@ goalDonate.addEventListener("click", () => {
   window.location.href = paymentUrl({ cause: goal.cause, amount: goalDonation.value });
 });
 
-async function loadCampaigns() {
+async function loadCampaigns({ preserveSelection = false } = {}) {
+  const selectedCampaignId = preserveSelection ? goalProject.value : "";
+  const selectedDonation = preserveSelection ? goalDonation.value : "";
   activeCampaigns = fallbackCampaigns();
   try {
-    const response = await fetch("/api/public/campaigns", { credentials: "same-origin" });
+    const response = await fetch("/api/public/campaigns", { credentials: "same-origin", cache: "no-store" });
     if (response.ok) {
       const data = await response.json();
       if (data.campaigns?.length) activeCampaigns = data.campaigns;
@@ -471,7 +474,13 @@ async function loadCampaigns() {
   goalProject.innerHTML = activeCampaigns
     .map((campaign) => `<option value="${escapeHtml(campaign.id)}">${escapeHtml(campaign.title)} - ${formatCurrency(campaign.target)}</option>`)
     .join("");
-  goalDonation.value = activeCampaigns[0]?.unitCost || 70;
+  const selectedStillExists = activeCampaigns.some((campaign) => campaign.id === selectedCampaignId);
+  if (preserveSelection && selectedStillExists) {
+    goalProject.value = selectedCampaignId;
+    if (selectedDonation) goalDonation.value = selectedDonation;
+  } else {
+    goalDonation.value = activeCampaigns[0]?.unitCost || 70;
+  }
   renderPublicCampaigns();
   renderPulseBoard();
   renderGiftDock();
@@ -588,7 +597,7 @@ async function loadReports() {
   if (!publicReports || !reportCount) return;
   let reports = Array.isArray(staticPublicData.reports) ? staticPublicData.reports : [];
   try {
-    const response = await fetch("/api/public/reports", { credentials: "same-origin" });
+      const response = await fetch("/api/public/reports", { credentials: "same-origin", cache: "no-store" });
     if (response.ok) {
       const data = await response.json();
       reports = data.reports || reports;
@@ -628,7 +637,7 @@ async function loadFieldMap() {
   if (!fieldSites) return;
   let data = staticPublicData.fieldMap || null;
   try {
-    const response = await fetch("/api/public/field-map", { credentials: "same-origin" });
+    const response = await fetch("/api/public/field-map", { credentials: "same-origin", cache: "no-store" });
     if (response.ok) data = await response.json();
   } catch {}
   if (!data) return;
@@ -725,7 +734,7 @@ async function loadManagedMedia() {
 
   let media = Array.isArray(staticPublicData.media) ? staticPublicData.media : [];
   try {
-    const response = await fetch("/api/public/media", { credentials: "same-origin" });
+    const response = await fetch("/api/public/media", { credentials: "same-origin", cache: "no-store" });
     if (response.ok) {
       const data = await response.json();
       media = data.media || media;
@@ -759,7 +768,7 @@ async function loadFieldStories() {
   if (!grid) return;
 
   try {
-    const response = await fetch("/api/public/stories", { credentials: "same-origin" });
+    const response = await fetch("/api/public/stories", { credentials: "same-origin", cache: "no-store" });
     if (!response.ok) return;
     const data = await response.json();
     const stories = Array.isArray(data.stories) ? data.stories.slice(0, 3) : [];
@@ -803,7 +812,7 @@ sendSubscriberCode?.addEventListener("click", async () => {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Could not send code.");
     const dev = data.devCode ? ` Local dev code: ${data.devCode}` : "";
-    setSubscriberStatus(`Confirmation code sent/prepared.${dev}`);
+    setSubscriberStatus(`Confirmation code request accepted.${dev || " Check your inbox, or subscribe again later if email delivery is still being connected."}`);
     window.siteToast?.("Code sent", "Check your inbox to confirm updates.");
   } catch (error) {
     setSubscriberStatus(error.message, true);
@@ -847,3 +856,18 @@ modalDonation.update();
 loadMtnStatus();
 loadFieldStories();
 loadManagedMedia();
+
+function refreshPublicContent() {
+  loadCampaigns({ preserveSelection: true });
+  loadReports();
+  loadFieldMap();
+  loadFieldStories();
+  loadManagedMedia();
+}
+
+if ("EventSource" in window) {
+  const updates = new EventSource("/api/public/updates");
+  updates.addEventListener("content", refreshPublicContent);
+}
+
+window.setInterval(refreshPublicContent, LIVE_REFRESH_MS);

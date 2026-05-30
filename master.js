@@ -140,7 +140,8 @@ sendAdminCode?.addEventListener("click", async () => {
   try {
     const result = await api("/api/auth/email/request", { method: "POST", body: JSON.stringify({ email }) });
     const suffix = result.devCode ? ` Local dev code: ${result.devCode}` : "";
-    setStatus(emailAuthStatus, `Code sent/prepared for ${result.maskedEmail}.${suffix}`);
+    const liveHint = suffix || " If it does not arrive, connect Resend/Brevo email delivery or use password login.";
+    setStatus(emailAuthStatus, `Code request accepted for ${result.maskedEmail}.${liveHint}`);
     window.siteToast?.("Login code sent", "Check your admin inbox.");
   } catch (error) {
     setStatus(emailAuthStatus, error.message, true);
@@ -171,11 +172,18 @@ document.querySelector("[data-logout]").addEventListener("click", async () => {
 
 document.querySelector("[data-refresh]").addEventListener("click", loadLibrary);
 
+storyControls?.querySelectorAll("input").forEach((input) => {
+  input.disabled = true;
+});
+
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];
   fileName.textContent = file?.name || "No file selected";
   const isVideo = Boolean(file?.type?.startsWith("video/"));
   storyControls?.classList.toggle("is-active", isVideo);
+  storyControls?.querySelectorAll("input").forEach((input) => {
+    input.disabled = !isVideo;
+  });
   if (featureStoryInput) featureStoryInput.checked = isVideo;
 });
 
@@ -189,6 +197,9 @@ uploadForm.addEventListener("submit", async (event) => {
     uploadForm.reset();
     fileName.textContent = "No file selected";
     storyControls?.classList.remove("is-active");
+    storyControls?.querySelectorAll("input").forEach((input) => {
+      input.disabled = true;
+    });
     setStatus(uploadStatus, "Published to the website.");
     window.siteToast?.("Media published", "The field update is now available on the public site.");
     await loadLibrary();

@@ -32,6 +32,7 @@ const MAX_UPLOAD_BYTES = 250 * 1024 * 1024;
 const SESSION_HOURS = 12;
 const MAX_ANALYTICS_EVENTS = 5000;
 const geoCache = new Map();
+const publicUpdateClients = new Set();
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -170,6 +171,13 @@ function sendJson(res, status, payload, headers = {}) {
     "Cache-Control": "no-store",
     ...headers,
   });
+}
+
+function notifyPublicUpdate(topic = "content") {
+  const payload = `event: ${topic}\ndata: ${JSON.stringify({ topic, at: new Date().toISOString() })}\n\n`;
+  for (const client of publicUpdateClients) {
+    client.write(payload);
+  }
 }
 
 async function readJson(file, fallback) {
@@ -392,6 +400,13 @@ function maskEmail(email) {
   if (!clean) return "";
   const [name, domain] = clean.split("@");
   return `${name.slice(0, 2)}***@${domain}`;
+}
+
+function canExposeDevCode(req) {
+  if (process.env.ALLOW_DEV_CODES === "true") return true;
+  if (process.env.NODE_ENV === "production") return false;
+  const host = String(req.headers.host || "").toLowerCase();
+  return host.startsWith("localhost") || host.startsWith("127.0.0.1") || host.startsWith("[::1]");
 }
 
 function codeHash(code, salt) {
@@ -964,7 +979,12 @@ async function handleApi(req, res, url) {
       text: "Use this code to unlock the Al-Ihsan Charity Foundation master page.",
       html: "<p>Use this code to unlock the Al-Ihsan Charity Foundation master page.</p>",
     });
-    return sendJson(res, 200, { ok: true, delivery: result.delivery, devCode: result.devCode, maskedEmail: maskEmail(email) });
+    return sendJson(res, 200, {
+      ok: true,
+      delivery: result.delivery,
+      devCode: canExposeDevCode(req) ? result.devCode : undefined,
+      maskedEmail: maskEmail(email),
+    });
   }
 
   if (url.pathname === "/api/auth/email/verify" && req.method === "POST") {
@@ -991,7 +1011,12 @@ async function handleApi(req, res, url) {
       text: "Use this code to open your Al-Ihsan donor portal.",
       html: "<p>Use this code to open your Al-Ihsan donor portal.</p>",
     });
-    return sendJson(res, 200, { ok: true, delivery: result.delivery, devCode: result.devCode, maskedEmail: maskEmail(email) });
+    return sendJson(res, 200, {
+      ok: true,
+      delivery: result.delivery,
+      devCode: canExposeDevCode(req) ? result.devCode : undefined,
+      maskedEmail: maskEmail(email),
+    });
   }
 
   if (url.pathname === "/api/portal/verify" && req.method === "POST") {
@@ -1208,6 +1233,25 @@ async function handleApi(req, res, url) {
     return sendJson(res, 200, data);
   }
 
+  if (url.pathname === "/api/public/updates" && req.method === "GET") {
+    res.writeHead(200, {
+      "Content-Type": "text/event-stream; charset=utf-8",
+      "Cache-Control": "no-store, no-transform",
+      Connection: "keep-alive",
+      "X-Accel-Buffering": "no",
+    });
+    res.write("retry: 5000\n\n");
+    publicUpdateClients.add(res);
+    const heartbeat = setInterval(() => {
+      res.write(": heartbeat\n\n");
+    }, 25000);
+    req.on("close", () => {
+      clearInterval(heartbeat);
+      publicUpdateClients.delete(res);
+    });
+    return;
+  }
+
   if (url.pathname === "/api/public/media" && req.method === "GET") {
     return sendJson(res, 200, { media: await publicMedia() });
   }
@@ -1267,7 +1311,11 @@ async function handleApi(req, res, url) {
       text: "Assalamu alaikum. Confirm your subscription to Al-Ihsan Charity Foundation field updates.",
       html: "<p>Assalamu alaikum.</p><p>Confirm your subscription to Al-Ihsan Charity Foundation field updates.</p>",
     });
-    return sendJson(res, 200, { ok: true, delivery: result.delivery, devCode: result.devCode });
+    return sendJson(res, 200, {
+      ok: true,
+      delivery: result.delivery,
+      devCode: canExposeDevCode(req) ? result.devCode : undefined,
+    });
   }
 
   if (url.pathname === "/api/subscribers/verify" && req.method === "POST") {
@@ -1541,6 +1589,7 @@ async function handleApi(req, res, url) {
     };
     const next = [item, ...campaigns.filter((entry) => entry.id !== item.id)];
     await fs.writeFile(CAMPAIGNS_FILE, JSON.stringify(next, null, 2));
+    notifyPublicUpdate("content");
     return sendJson(res, 200, { item, campaigns: next });
   }
 
@@ -1550,6 +1599,7 @@ async function handleApi(req, res, url) {
     const campaigns = await readJson(CAMPAIGNS_FILE, DEFAULT_CAMPAIGNS);
     const next = campaigns.filter((entry) => entry.id !== id);
     await fs.writeFile(CAMPAIGNS_FILE, JSON.stringify(next, null, 2));
+    notifyPublicUpdate("content");
     return sendJson(res, 200, { ok: true, campaigns: next });
   }
 
@@ -1583,6 +1633,7 @@ async function handleApi(req, res, url) {
     };
     const next = [item, ...reports.filter((entry) => entry.id !== item.id)];
     await fs.writeFile(REPORTS_FILE, JSON.stringify(next, null, 2));
+    notifyPublicUpdate("content");
     return sendJson(res, 200, { item, reports: next });
   }
 
@@ -1592,6 +1643,7 @@ async function handleApi(req, res, url) {
     const reports = await readJson(REPORTS_FILE, []);
     const next = reports.filter((entry) => entry.id !== id);
     await fs.writeFile(REPORTS_FILE, JSON.stringify(next, null, 2));
+    notifyPublicUpdate("content");
     return sendJson(res, 200, { ok: true, reports: next });
   }
 
@@ -1678,6 +1730,7 @@ async function handleApi(req, res, url) {
     };
     media.unshift(item);
     await fs.writeFile(MEDIA_FILE, JSON.stringify(media, null, 2));
+    notifyPublicUpdate("content");
     return sendJson(res, 201, { item });
   }
 
@@ -1691,10 +1744,30 @@ async function handleApi(req, res, url) {
       await fs.rm(path.join(UPLOAD_DIR, path.basename(item.src)), { force: true });
     }
     await fs.writeFile(MEDIA_FILE, JSON.stringify(next, null, 2));
+    notifyPublicUpdate("content");
     return sendJson(res, 200, { ok: true });
   }
 
   return sendJson(res, 404, { error: "API route not found." });
+}
+
+function isBlockedStaticPath(pathname) {
+  if (pathname.startsWith("/uploads/")) return false;
+  const clean = pathname.toLowerCase();
+  const parts = clean.split("/").filter(Boolean);
+  if (parts.some((part) => part.startsWith("."))) return true;
+  const blockedPrefixes = ["/data/", "/incoming-media/", "/dist-hosting/", "/node_modules/", "/archives/"];
+  if (blockedPrefixes.some((prefix) => clean.startsWith(prefix))) return true;
+  const blockedNames = new Set([
+    "server.js",
+    "package.json",
+    "package-lock.json",
+    "render.yaml",
+    "start_al_ihsan_site.bat",
+    "start_al_ihsan_site.ps1",
+  ]);
+  if (blockedNames.has(parts.at(-1))) return true;
+  return [".zip", ".md", ".txt", ".ps1", ".bat", ".env", ".log"].some((ext) => clean.endsWith(ext));
 }
 
 async function serveStatic(req, res, url) {
@@ -1704,6 +1777,7 @@ async function serveStatic(req, res, url) {
   if (pathname === "/pay" || pathname === "/donate") pathname = "/pay.html";
   if (pathname === "/portal") pathname = "/portal.html";
   if (pathname === "/analytics") pathname = "/analytics.html";
+  if (isBlockedStaticPath(pathname)) return send(res, 404, "Not found");
   const staticRoot = pathname.startsWith("/uploads/") ? UPLOAD_DIR : ROOT;
   const relativePath = pathname.startsWith("/uploads/") ? pathname.slice("/uploads/".length) : pathname;
   const file = path.normalize(path.join(staticRoot, relativePath));

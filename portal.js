@@ -89,7 +89,7 @@ sendPortalCode.addEventListener("click", async () => {
       body: JSON.stringify({ email: portalEmail.value.trim() }),
     });
     const suffix = data.devCode ? ` Local dev code: ${data.devCode}` : "";
-    setStatus(`Code sent/prepared for ${data.maskedEmail}.${suffix}`);
+    setStatus(`Code request accepted for ${data.maskedEmail}.${suffix || " Check your inbox, or contact Al-Ihsan if email delivery is not connected yet."}`);
     window.siteToast?.("Portal code sent", "Check your email to continue.");
   } catch (error) {
     setStatus(error.message, true);

@@ -25,6 +25,14 @@
         <span>Preparing mercy in motion</span>
       </div>
     </div>
+    <script>
+      window.setTimeout(function () {
+        var loader = document.querySelector("[data-site-loader]");
+        if (!loader) return;
+        loader.classList.add("is-hidden");
+        window.setTimeout(function () { loader.remove(); }, 720);
+      }, 4200);
+    </script>
 
     <a class="skip-link" href="#main">Skip to content</a>
 

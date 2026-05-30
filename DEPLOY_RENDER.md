@@ -50,5 +50,16 @@ This app stores runtime state in JSON files and uploaded media on disk. A paid R
 - Do **not** upload your local `.env` file.
 - Do **not** upload `data/auth.json` from your computer.
 - Use the live domain URL in `PUBLIC_SITE_URL`.
-- On the free setup, uploads and admin data can disappear after restarts or redeploys because there is no persistent disk.
-- When you are ready for a durable production setup, change `plan: free` back to a paid plan, set `APP_STORAGE_DIR=/var/data`, and restore a persistent disk block in `render.yaml`.
+- On the free setup, uploads and admin data can disappear after restarts, sleep, or redeploys because `/tmp/al-ihsan` is temporary runtime storage.
+- The public page now listens for live update events from the master page and also refreshes campaigns, reports, map data, photos, and videos every 15 seconds.
+- Email login codes are not shown on the live site. To send real codes, connect Resend or Brevo instead of using `local-outbox`.
+- When you are ready for a durable production setup, change `plan: free` back to a paid plan, set `APP_STORAGE_DIR=/var/data/al-ihsan`, and restore a persistent disk block in `render.yaml`.
+
+Example durable storage block:
+
+```yaml
+    disk:
+      name: al-ihsan-storage
+      mountPath: /var/data
+      sizeGB: 1
+```
